@@ -77,7 +77,8 @@ function TimePill({
         color: hovered ? '#7ab648' : 'rgba(196,184,168,0.5)',
       }}
     >
-      {opt.label}
+      {/* Changed opt.label to label here */}
+      {label}
     </button>
   )
 }
