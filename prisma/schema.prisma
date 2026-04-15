@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  createdAt DateTime @default(now())
+  logs      Log[]
+}
+
+model Habit {
+  id        String    @id @default(cuid())
+  name      String
+  icon      String
+  type      HabitType
+  points    Int
+  isDefault Boolean   @default(true)
+  logs      Log[]
+}
+
+model Log {
+  id       String   @id @default(cuid())
+  userId   String
+  habitId  String
+  duration String?
+  points   Int
+  date     DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id])
+  habit    Habit    @relation(fields: [habitId], references: [id])
+}
+
+enum HabitType {
+  POSITIVE
+  NEGATIVE
+}
